@@ -22,6 +22,9 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "fastify": "^3.11.0",
-    "fastify-compress": "^3.4.1"
+    "fastify-compress": "^3.4.1",
+    "pg": "^8.5.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.31"
   }
 }
