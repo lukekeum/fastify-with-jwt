@@ -1,6 +1,7 @@
 import fastify, { FastifyInstance } from 'fastify';
 import fastifyCompress from 'fastify-compress';
 import { IncomingMessage, Server, ServerResponse } from 'http';
+import rootRoute from './router/api';
 
 class App {
   server: FastifyInstance<Server, IncomingMessage, ServerResponse>;
@@ -9,6 +10,8 @@ class App {
     this.server = fastify({ logger: true });
 
     this.server.register(fastifyCompress);
+
+    this.server.register(rootRoute);
   }
 
   async start() {
