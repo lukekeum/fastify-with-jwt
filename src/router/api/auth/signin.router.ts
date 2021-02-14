@@ -23,18 +23,18 @@ const signinRoute: FastifyPluginCallback = (fastify, opts, done) => {
       const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
       if (isPasswordCorrect) {
-        return res
-          .status(201)
-          .send({
-            message: 'Signed in',
-            data: { id: user.id, userid, nickname: user.nickname },
-          });
+        return res.status(201).send({
+          message: 'Signed in',
+          data: { id: user.id, userid, nickname: user.nickname },
+        });
       }
       return res.status(401).send({ message: 'Password incorrect' });
     } catch (err) {
       app.server.log.error(err);
     }
   });
+
+  done();
 };
 
 export default signinRoute;
