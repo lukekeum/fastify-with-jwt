@@ -1,5 +1,7 @@
 import fastify, { FastifyInstance } from 'fastify';
 import fastifyCompress from 'fastify-compress';
+import fastifyJwt from 'fastify-jwt';
+import fastifyCookie from 'fastify-cookie';
 import { IncomingMessage, Server, ServerResponse } from 'http';
 import rootRoute from './router/api';
 
@@ -7,9 +9,18 @@ class App {
   server: FastifyInstance<Server, IncomingMessage, ServerResponse>;
 
   constructor() {
+    const { JWT_SECRET = '' } = process.env;
+
     this.server = fastify({ logger: true });
 
     this.server.register(fastifyCompress);
+    this.server.register(fastifyCookie);
+    this.server.register(fastifyJwt, {
+      secret: JWT_SECRET,
+      cookie: {
+        cookieName: 'token',
+      },
+    });
 
     this.server.register(rootRoute);
   }
