@@ -1,4 +1,5 @@
 import { FastifyPluginCallback } from 'fastify';
+import bcrypt from 'bcrypt';
 
 import app from '@src/app';
 import User from '@src/entity/user.entity';
@@ -20,10 +21,13 @@ const signupRoute: FastifyPluginCallback = (fastify, opts, done) => {
         return res.status(401).send({ message: 'User-id already exists' });
       }
 
+      const salt = await bcrypt.genSalt(10);
+      const encryptedPassword = await bcrypt.hash(password, salt);
+
       const registerUser = new User();
       registerUser.userid = userid;
       registerUser.nickname = nickname;
-      registerUser.password = password;
+      registerUser.password = encryptedPassword;
 
       await registerUser.save();
 
