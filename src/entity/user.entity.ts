@@ -6,7 +6,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
 } from 'typeorm';
+import Memo from './memo.entity';
 
 @Entity('users')
 export default class User extends BaseEntity {
@@ -14,7 +18,7 @@ export default class User extends BaseEntity {
   id: number;
 
   @Index()
-  @Column({ nullable: false })
+  @Column({ nullable: false, unique: true })
   userid!: string;
 
   @Index()
@@ -23,6 +27,9 @@ export default class User extends BaseEntity {
 
   @Column({ nullable: false })
   password!: string;
+
+  @OneToMany((type) => Memo, (memo) => memo.id)
+  memos: Memo[];
 
   @CreateDateColumn()
   created_at!: Date;

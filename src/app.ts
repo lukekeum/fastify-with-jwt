@@ -22,7 +22,7 @@ class App {
       },
     });
 
-    this.server.register(rootRoute);
+    this.server.register(rootRoute, { prefix: '/api' });
   }
 
   async start() {
