@@ -6,6 +6,17 @@ interface IGetByIDParams {
 }
 
 const getRoute: FastifyPluginCallback = (fastify, opts, done) => {
+  fastify.get('/get', async (req, res) => {
+    try {
+      const memo = await Memo.find();
+
+      return res.status(200).send({ data: memo });
+    } catch (err) {
+      fastify.log.error(err);
+      return res.status(500).send({ error: err });
+    }
+  });
+
   fastify.get('/get/:id', async (req, res) => {
     const id = parseInt((req.params as IGetByIDParams)['id'], 10);
 
