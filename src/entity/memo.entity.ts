@@ -20,12 +20,7 @@ export default class Memo extends BaseEntity {
   @Column()
   content!: string;
 
-  @Index()
-  @Column()
-  user_id!: number;
-
   @ManyToOne((type) => User, (user) => user.memos)
-  @JoinColumn({ name: 'user_id' })
   user: User;
 
   @CreateDateColumn()
