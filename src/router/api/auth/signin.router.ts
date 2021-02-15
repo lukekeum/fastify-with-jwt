@@ -23,9 +23,12 @@ const signinRoute: FastifyPluginCallback = (fastify, opts, done) => {
       const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
       if (isPasswordCorrect) {
+        const { id, userid, nickname } = user;
+        const token = fastify.jwt.sign({ id, userid, nickname });
         return res.status(201).send({
           message: 'Signed in',
           data: { id: user.id, userid, nickname: user.nickname },
+          token: token,
         });
       }
       return res.status(401).send({ message: 'Password incorrect' });

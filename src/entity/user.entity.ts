@@ -14,7 +14,7 @@ export default class User extends BaseEntity {
   id: number;
 
   @Index()
-  @Column({ nullable: false })
+  @Column({ nullable: false, unique: true })
   userid!: string;
 
   @Index()
